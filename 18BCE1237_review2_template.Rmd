@@ -1,0 +1,161 @@
+---
+  title: "Review2 - Accidents analysis"
+output: 
+  html_document: 
+  fig_height: 4
+highlight: pygments
+theme: spacelab
+---
+### Reg. No: 18BCE1237
+  
+### Name: Aakash Ratha
+  
+## Setup
+
+Sample
+```{r}
+library("dplyr")
+library("ggplot2")
+library("tidyr")
+library("ggpubr")
+```
+
+```{r}
+data = read.csv('US_Accidents_June20.csv')
+head(data)
+str(data)
+```
+
+```{r}
+class(data)
+summary(data)
+```
+
+```{r}
+data$End_Lat
+data %>%
+  distinct(End_Lat)
+data$End_Lng
+data %>%
+  distinct(End_Lng)
+```
+```{r}
+colnames(data)
+```
+
+```{r}
+data$Severity
+data %>%
+  distinct(Severity)
+mean(data$Severity)
+```
+
+# Above output shows that on an average the severity of accidents in US is between 2-3 (mostly 2). Here 1 indicates the least impact on traffic and 4 indicates significant impact on traffic.
+
+```{r}
+data$Source
+data %>%
+  distinct(Source)
+data %>%
+  summarise(count=n_distinct(Source))
+```
+
+# There are 3 different sources of all these accident reports mentioned in this dataset.
+
+```{r}
+data %>%
+  distinct(Distance.mi.)
+mean(data$Distance.mi.)
+```
+
+# Average length of road extent affected by accidents in US is 0.2816167
+
+```{r}
+data %>%
+  distinct(Number)
+data %>%
+  distinct(Street)
+data %>%
+  select(Number, Street)
+data %>%
+  filter(Number==2584) %>%
+  select(Number, Street, Side)
+data %>%
+  filter(Number==376) %>%
+  select(Number, Street, Side)
+```
+
+# If we consider street number 2584 and 376, more number of accidents have taken place on right hand side (Relative side). Similarly, we can perform same analysis for other street numbers as well.
+
+```{r}
+data %>%
+  distinct(Visibility.mi.)
+mean(data$Visibility.mi., na.rm = TRUE)
+data %>%
+  mutate(Visibility.mi.= replace(Visibility.mi., is.na(Visibility.mi.), mean(data$Visibility.mi., na.rm = TRUE)))
+data = data%>%
+  mutate(Visibility.mi.= replace(Visibility.mi., is.na(Visibility.mi.), mean(data$Visibility.mi., na.rm = TRUE)))
+mean(data$Visibility.mi.)
+```
+
+# If we talk about the visibility, average visibility(in miles) is 9.122644
+
+```{r}
+data$State
+data %>%
+  distinct(State)
+data %>%
+  filter(State=='OH') %>%
+  select(City, Street, Number)
+```
+
+# There are almost 66k-67k accidents in state OH which is a huge number. Similarly in this way we can analyse for other states too. Now in OH state itself, we will filter city.
+
+```{r}
+data$City
+data %>%
+  distinct(City)
+data %>%
+  group_by(City) %>%
+  summarise(n=n()) %>%
+  filter(City=='Dayton')
+```
+
+# There are 14,251 accidents in Dayton out of 66k-67k in OH state. Similar analysis can be done for other cities too in OH state itself.
+
+```{r}
+data$Weather_Condition
+data %>%
+  distinct(Weather_Condition)
+calculate_mode <- function(x) {
+  uniqx <- unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+calculate_mode(data$Weather_Condition)
+```
+
+# Most of the accidents are reported in Clear conditions.
+
+```{r}
+max_state = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_state(data$State)
+```
+
+# Most number of accidents have occured in CA state.
+
+```{r}
+max_city = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_city(data$City)
+```
+
+# Highest number of accidents are reported in Houston city.
+
+```{r}
+
+```
