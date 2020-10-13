@@ -196,5 +196,44 @@ min_state(data$State)
 # Minimum number of accidents have taken place in ND state.
 
 ```{r}
+data$Temperature.F.
+data %>%
+  distinct(Temperature.F.)
+mean(data$Temperature.F., na.rm = TRUE)
+```
+
+# Mean temperature is 61.935 in F.
+
+```{r}
+data$TMC
+data %>%
+  distinct(TMC)
+data %>%
+  summarise(n=n_distinct(TMC))
+```
+
+# There are total 22 different TMC (Traffic Message Channel) which gives more detailed description.
+
+```{r}
+min_TMC = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_TMC(data$TMC)
+```
+
+# 351 is the TMC which has been reported least number of times.
+
+```{r}
+max_TMC = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_TMC(data$TMC)
+```
+
+# 201 is the TMC which has been reported most number of times.
+
+```{r}
 
 ```
