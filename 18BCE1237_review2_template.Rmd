@@ -1,5 +1,5 @@
 ---
-  title: "Review2 - Accidents analysis"
+title: "Review2 - Accidents analysis"
 output: 
   html_document: 
   fig_height: 4
@@ -32,12 +32,12 @@ summary(data)
 ```
 
 ```{r}
-data$End_Lat
 data %>%
   distinct(End_Lat)
-data$End_Lng
+data
 data %>%
   distinct(End_Lng)
+data
 ```
 ```{r}
 colnames(data)
@@ -81,8 +81,21 @@ data %>%
   filter(Number==2584) %>%
   select(Number, Street, Side)
 data %>%
+  filter(Number==2584 & Side=='R') %>%
+  select(Number, Street, Side)
+data %>%
+  filter(Number==2584 & Side=='L') %>%
+  select(Number, Street, Side)
+data %>%
   filter(Number==376) %>%
   select(Number, Street, Side)
+data %>%
+  filter(Number==376 & Side=='R') %>%
+  select(Number, Street, Side)
+data %>%
+  filter(Number==376 & Side=='L') %>%
+  select(Number, Street, Side)
+
 ```
 
 # If we consider street number 2584 and 376, more number of accidents have taken place on right hand side (Relative side). Similarly, we can perform same analysis for other street numbers as well.
@@ -107,6 +120,9 @@ data %>%
 data %>%
   filter(State=='OH') %>%
   select(City, Street, Number)
+data %>%
+  filter(State=='OH') %>%
+  summarise(n=n())
 ```
 
 # There are almost 66k-67k accidents in state OH which is a huge number. Similarly in this way we can analyse for other states too. Now in OH state itself, we will filter city.
@@ -115,6 +131,9 @@ data %>%
 data$City
 data %>%
   distinct(City)
+data %>%
+  group_by(City) %>%
+  summarise(n=n())
 data %>%
   group_by(City) %>%
   summarise(n=n()) %>%
@@ -155,6 +174,26 @@ max_city(data$City)
 ```
 
 # Highest number of accidents are reported in Houston city.
+
+```{r}
+min_city = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_city(data$City)
+```
+
+# Tiro is the least affected city as far as accidents are concerned.
+
+```{r}
+min_state = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_state(data$State)
+```
+
+# Minimum number of accidents have taken place in ND state.
 
 ```{r}
 
