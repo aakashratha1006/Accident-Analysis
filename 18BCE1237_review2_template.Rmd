@@ -235,5 +235,317 @@ max_TMC(data$TMC)
 # 201 is the TMC which has been reported most number of times.
 
 ```{r}
-
+data$Zipcode
+data %>%
+  distinct(Zipcode)
+data %>%
+  summarise(n=n())
+max_ZIP = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_ZIP(data$Zipcode)
 ```
+
+# Maximum accidents reported zipcode - 91706
+
+```{r}
+min_ZIP = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_ZIP(data$Zipcode)
+```
+
+# Minimum accidents reported zipcode - 43068-3402
+
+```{r}
+data %>%
+  group_by(Zipcode) %>%
+  summarise(n=n())
+```
+
+# Zipcode and number of accidents
+
+```{r}
+data$Wind_Chill.F.
+data %>%
+  distinct(Wind_Chill.F.)
+mean(data$Wind_Chill.F., na.rm = TRUE)
+data = data%>%
+  mutate(Wind_Chill.F.= replace(Wind_Chill.F., is.na(Wind_Chill.F.), mean(data$Wind_Chill.F., na.rm = TRUE)))
+mean(data$Wind_Chill.F.)
+```
+
+# Mean wind chill in F is 53.5573
+
+```{r}
+data$Number
+data %>%
+  distinct(Number)
+data %>%
+  group_by(Number) %>%
+  summarise(n=n())
+```
+
+# Street number and number of accidents
+
+```{r}
+min_num = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_num(data$Number)
+```
+
+# Minimum number of accidents - Street number 17520
+
+```{r}
+max_num = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_num(data$Number)
+```
+
+# Maximum number of accidents - Street number 1.
+
+```{r}
+data$Timezone
+data %>%
+  distinct(Timezone)
+data %>%
+  group_by(Timezone) %>%
+  summarise(n=n())
+```
+
+# Timezone and reported number of accidents
+
+```{r}
+data %>%
+  distinct(Description)
+```
+
+# Different type of description
+
+```{r}
+data$Airport_Code
+data %>%
+  distinct(Airport_Code)
+data %>%
+  group_by(Airport_Code) %>%
+  summarise(n=n())
+```
+
+# Airport code and number of accidents
+
+```{r}
+max_code = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+max_code(data$Airport_Code)
+```
+
+# KMCZ is the nearest airport based weather station where most number of accidents have taken place.
+
+```{r}
+min_code = function(x) {
+  uniqx = unique(na.omit(x))
+  uniqx[which.min(tabulate(match(x, uniqx)))]
+}
+min_code(data$Airport_Code)
+```
+
+# KP58 is the nearest airport based weather station where min. number of accidents have taken place.
+
+```{r}
+data$Weather_Timestamp
+data %>%
+  distinct(Weather_Timestamp)
+data %>%
+  group_by(Weather_Timestamp) %>%
+  summarise(n=n())
+```
+
+# Weather_Timestamp
+
+```{r}
+data$Humidity...
+data %>%
+  distinct(Humidity...)
+data %>%
+  group_by(Humidity...) %>%
+  summarise(n=n())
+mean(data$Humidity..., na.rm=TRUE)
+```
+
+# Humidity and number of accidents. Mean is 65.11427
+
+```{r}
+max_code(data$Humidity...)
+min_code(data$Humidity...)
+```
+
+# Max and min accidents have taken place at 100% and 1% humidity respectively.
+
+```{r}
+data$Pressure.in.
+data %>%
+  distinct(data$Pressure.in.)
+mean(data$Pressure.in., na.rm=TRUE)
+```
+
+# Mean pressure is 29.74463
+
+```{r}
+data$Wind_Direction
+data %>%
+  distinct(Wind_Direction)
+data %>%
+  group_by(Wind_Direction) %>%
+  summarise(n=n())
+```
+
+# Wind_Direction and number of accidents
+
+```{r}
+max_code(data$Wind_Direction)
+```
+
+# When wind is calm, there are max. number of accidents reported so there's no point of any kind of wind direction.
+
+```{r}
+data$Wind_Speed.mph.
+data %>%
+  distinct(Wind_Speed.mph.)
+data %>%
+  group_by(Wind_Speed.mph.) %>%
+  summarise(n=n())
+```
+
+# Wind_Speed and number of accidents
+
+```{r}
+mean(data$Wind_Speed.mph., na.rm=TRUE)
+```
+
+# Mean wind speed is 8.219025 mph
+
+```{r}
+data$Precipitation.in.
+data %>%
+  distinct(Precipitation.in.)
+data %>%
+  group_by(Precipitation.in.) %>%
+  summarise(n=n())
+```
+
+# Precipitation and number of accidents
+
+```{r}
+mean(data$Precipitation.in., na.rm=TRUE)
+```
+
+# Mean precipitation is 0.01598256
+
+```{r}
+max_code(data$Precipitation.in.)
+min_code(data$Precipitation.in.)
+```
+
+# Max accidents have taken place at 0 precipitation. Precipitation again does not make any sense
+
+```{r}
+data$Amenity
+data %>%
+  distinct(Amenity)
+data %>%
+  group_by(Amenity) %>%
+  summarise(n=n())
+```
+
+# Accidents and presence of amenity
+
+```{r}
+data$Bump
+data %>%
+  group_by(Bump) %>%
+  summarise(n=n())
+```
+
+# Very few accidents have occured in presence of Bump.
+
+```{r}
+data$Crossing
+data %>%
+  group_by(Crossing) %>%
+  summarise(n=n())
+```
+
+# almost 3 lakh accidents have taken place in presence of Crossing.
+
+```{r}
+data %>%
+  group_by(Junction) %>%
+  summarise(n=n())
+```
+
+# Again, almost 3 lakh accidents have occured in presence of Junction.
+
+```{r}
+data %>%
+  group_by(No_Exit) %>%
+  summarise(n=n())
+```
+
+# 4384 accidents have taken place in presence of No_Exit.
+
+```{r}
+data %>%
+  group_by(Give_Way) %>%
+  summarise(n=n())
+```
+
+# 9564 accidents have taken place in presence of give_way.
+
+```{r}
+data %>%
+  group_by(Railway) %>%
+  summarise(n=n())
+```
+
+# Almost 32k accidents have taken place in presence of railway and this can be dangerous and can cause deaths.
+
+```{r}
+data %>%
+  group_by(Roundabout) %>%
+  summarise(n=n())
+```
+
+# At roundabout, 184 accidents have taken place.
+
+```{r}
+data %>%
+  group_by(Stop) %>%
+  summarise(n=n())
+```
+
+# Almost 52k accidents have occured in presence of Stop.
+
+```{r}
+data %>%
+  group_by(Station) %>%
+  summarise(n=n())
+```
+
+# 70k accidents in presence of station
+
+```{r}
+data %>%
+  group_by(Turning_Loop) %>%
+  summarise(n=n())
+```
+
+# No accidents reported in presence of turning loop.
+
