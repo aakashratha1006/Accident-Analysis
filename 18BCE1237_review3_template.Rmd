@@ -1,0 +1,167 @@
+---
+title: "Review2 - Accidents analysis"
+output: 
+  html_document: 
+  fig_height: 4
+highlight: pygments
+theme: spacelab
+---
+### Reg. No: 18BCE1237
+  
+### Name: Aakash Ratha
+  
+## Setup
+  
+# Libraries
+  
+```{r}
+library("ggplot2")
+library("dplyr")
+library("ggpubr")
+library("tidyr")
+```
+
+# Importing the csv file
+
+```{r}
+data = read.csv('US_Accidents_June20.csv')
+head(data)
+```
+
+```{r}
+str(data)
+```
+
+
+```{r}
+data %>%
+  distinct(TMC)
+calculate_mode <- function(x) {
+  uniqx <- unique(na.omit(x))
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+calculate_mode(data$TMC)
+```
+
+# 201 is the most frequent TMC reported.
+
+```{r}
+hist(data$TMC)
+```
+# Above is the histogram
+
+```{r}
+hist(data$Severity)
+```
+# Above is the histogram.
+
+```{r}
+# Correlation matrix
+my_data = data[, c(4,7,8,11)]
+res = cor(my_data)
+round(res,2)
+```
+# Above is the correlation matrix
+
+```{r}
+data %>%
+  summarise(n=n_distinct(Timezone))
+data %>%
+  group_by(Timezone) %>%
+  summarise(n=n())
+```
+
+# There are 5 distinct timezones.
+# According to the different timezones number of accidents occured.
+
+```{r}
+x = c(837122, 1484854, 200902, 986859)
+labels = c('US/Central', 'US/Eastern', 'US/Mountain', 'US/Pacific')
+piepercent = round(100*x/sum(x), 1)
+pie(x, labels = piepercent, main="Timezone pie chart", col=rainbow(length(x)))
+legend("topright", c('US/Central', 'US/Eastern', 'US/Mountain', 'US/Pacific'), cex = 0.8, fill = rainbow(length(x)))
+```
+
+# Timezone pie chart
+
+```{r}
+data %>%
+  distinct(State)
+data %>%
+  group_by(State) %>%
+  summarise(n=n())
+```
+# Number of accidents state-wise
+
+```{r}
+data %>%
+  group_by(Side) %>%
+  summarise(n=n())
+x=c(633819, 2879797)
+labels=c('L', 'R')
+piepercent = round(100*x/sum(x), 1)
+pie(x, labels = piepercent, main="Side pie chart", col=rainbow(length(x)))
+legend("topright", c('L', 'R'), cex = 0.8, fill = rainbow(length(x)))
+```
+
+# Pie chart of Side wise accidents
+
+```{r}
+x = c(44625, 2012, 78584, 816825, 49731)
+labels = c('AL', 'AR', 'AZ', 'CA', 'CO')
+barplot(x, main="Accidents statewise", xlab="Number of accidents", ylab = "States", names.arg = labels, col="darkred", horiz = TRUE)
+```
+
+# Accidents statewise barplot
+
+```{r}
+data %>%
+  filter(State=='OH') %>%
+  group_by(City) %>%
+  summarise(n=n())
+```
+
+# Accidents city-wise in state OH - Houston is the one in which max.accidents have taken place
+
+```{r}
+data %>%
+  filter(City=='Houston') %>%
+  summarise(n=n())
+```
+
+# 1,01,240 accidents took place in houston.
+
+```{r}
+data %>%
+  group_by(Street) %>%
+  summarise(n=n())
+```
+
+# Accidents taken place in the houston city and grouped streetwise.
+
+```{r}
+calculate_mode(data$Street)
+```
+
+# I-5 N road - max. accidents took place
+
+```{r}
+data %>%
+  filter(City=='Houston') %>%
+  select(Street)
+```
+
+# Streets in Houston
+
+```{r}
+
+```
+
+#
+
+```{r}
+
+```
+
+
+
