@@ -1,5 +1,5 @@
 ---
-title: "Review2 - Accidents analysis"
+title: "Review3 - Accidents analysis"
 output: 
   html_document: 
   fig_height: 4
@@ -187,8 +187,60 @@ data %>%
 # Number of accidents in each zipcode
 
 ```{r}
-
+data %>%
+  filter(City=='Houston') %>%
+  select(Number)
 ```
+
+# Street numbers in Houston city
+
+```{r}
+data %>%
+  filter(City=='Houston') %>%
+  group_by(Number) %>%
+  summarise(n=n())
+```
+
+# Number of accidents street number wise in houston city.
+
+```{r}
+calculate_mode(data$Number)
+```
+
+# Max. accidents - street number 1 - houston city
+
+```{r}
+calculate_mode(data$Zipcode)
+```
+
+# Max. accidents - zipcode - 91706
+
+```{r}
+data %>%
+  distinct(Source)
+```
+
+# Different sources where accident was reported.
+
+```{r}
+data %>%
+  group_by(Source) %>%
+  summarise(n=n())
+```
+
+# Number of accidents reported by each of these sources.
+
+```{r}
+x = c(1034799, 2414301, 64517)
+labels = c('Bing', 'MapQuest', 'MapQuest-Bing')
+piepercent = round(100*x/sum(x), 1)
+pie(x, labels = piepercent, main="Source pie chart", col=rainbow(length(x)))
+legend("topright", c('Bing', 'MapQuest', 'MapQuest-Bing'), cex = 0.8, fill = rainbow(length(x)))
+```
+
+# Pie chart of the sources which reported accidents.
+
+
 
 # RECOMMENDATION
 
