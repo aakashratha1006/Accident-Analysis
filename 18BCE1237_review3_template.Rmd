@@ -56,12 +56,28 @@ hist(data$Severity)
 # Above is the histogram.
 
 ```{r}
+data %>%
+  group_by(Severity) %>%
+  summarise(n=n())
+```
+
+# Accidents severity-wise
+
+```{r}
+x = c(29174, 2373210, 998913, 112320)
+labels = c('Severity - 1', 'Severity - 2', 'Severity - 3', 'Severity - 4')
+piepercent = round(100*x/sum(x), 1)
+pie(x, labels = piepercent, main="Severity pie chart", col=rainbow(length(x)))
+legend("topright", c('Severity - 1', 'Severity - 2', 'Severity - 3', 'Severity - 4'), cex = 0.8, fill = rainbow(length(x)))
+```
+
+```{r}
 # Correlation matrix
 my_data = data[, c(4,7,8,11)]
 res = cor(my_data)
 round(res,2)
 ```
-# Above is the correlation matrix
+# Above is the correlation matrix - each of these variables are weakly correlated to each other.
 
 ```{r}
 data %>%
@@ -154,14 +170,70 @@ data %>%
 # Streets in Houston
 
 ```{r}
-
+data %>%
+  filter(City=='Houston') %>%
+  select(Zipcode)
 ```
 
-#
+# Zipcodes in houston
+
+```{r}
+data %>%
+  filter(City=='Houston') %>%
+  group_by(Zipcode) %>%
+  summarise(n=n())
+```
+
+# Number of accidents in each zipcode
 
 ```{r}
 
 ```
 
+# RECOMMENDATION
 
+# Road accidents are unavoidable but the risk of road accidents can simply be reduced by simple precauations and thinking ahead.
 
+# Based on the US accidents analysis, there are many reasons for accidents.
+
+# The solution to this falls under Infrastructure, Policy, Administrative and human policy.
+
+# 1. Infrastructure recommendation
+
+# (i) The US Government should restrict the number of vehicles on roads,which can be done by improving public transportation through the implementation of new modes of transport like bullet trains, hyperloop, high-speed trains between major cities such as houston. In states like OH, there are more vehicles on roads, and the number of accidents is higher.
+
+# (ii) The government should consider the designing of roads as per new vehicles coming into the market, which can withhold high speed.
+
+# 2. Policy recommendation
+
+# (i) Driver Age - US accident insights show a good number of drivers involved in accidents are less than 18 years of age. Also, according to the Allstate Blog, “driving accidents are the leading cause of death for people under the age of 18.” While not all teens are irresponsible and immature, it may be beneficial to increase the driving age to 18 in order to protect everyone.
+
+# (ii) Drunk drivers - US Accident insights show that around 60% of accidents are due to drunk cases. The government should revise the penalties on a drunk driver and should make them stricter in every state. Besides, the authorities should ensure that people caught disobeying traffic rules are severely punished by the law to instills discipline among the people.
+
+# (iii) Speed Limit - The speed limit is always a topic of discussion regarding the accidents. Many safety experts believe that speed kills, and the higher the speed limit, the more people are in danger. Studies are mixed, however, on the validity of this theory.Decades of research and data collection show that higher speed limits do not lead to more accidents. Although they do not lead to a more significant number of accidents, they do lead to more severe accidents. Considering this, the government should take appropriate action for speed limits.
+
+# (iv) Car Maintenance - The government should revise the retirement age of vehicles and should also implement strict action on car maintenance by traffic administration. Most accidents are happening due to car maintenance, like brake issues, car lights, etc.
+
+# 3. Administrative Recommendation
+
+# (i) The school curriculum should incorporate safety control measures at the primary school level, a great deal of awareness will be reached in instilling safety measures to the younger generation so that they can acquire the discipline of road safety measures right from the childhood
+
+# (ii) The government authorities should make sure that only drivers who have been trained and certified to drive should be on the road.
+
+# 4. Human Behvaior Recommendation
+
+# (i) Bad Weather - As the weather cannot be controlled, human behavior is essential in these situations. With self-discipline, accidents can be reduced.
+
+# (ii) Automated Cars - They can be an excellent solution to reduce accidents as accidents happen due to manual errors and repeated tasks. However, it will be essential to look at traditional and automated cars on the road to see what the impact will be. When every car is automatic, then it will reduce the number of accidents.
+
+# Future work
+
+# 1. As far as data is concerned, age of the person involved in the accident and alcohol intake (if any). These two factors should also be incorporated in the data.
+
+# 2. This analysis can be deployed in a web application as well so that this is easily accessible and can be used by many drivers and higher authorities who are responsible for traffic management.
+
+# 3. Creating a machine learning model can help the public predict an accident location based on the source and destination location along with the date and time of travel. This type of prediction model can help reduce the number of accidents happening in the US. The prediction model can incorporate several neural network-based components that use a variety of data attributes, such as traffic events, weather data, points-of-interest, time information and other attributes.
+
+# Conclusion
+
+# Traffic accidents are a main public safety issue, with much research devoted to the analysis and prediction of these rare events. The study helped us to derive factors that are responsible for accidents. From this dataset, a variety of insights concerning the location, time, weather, and points-of-interest of an accident are found. The analysis helps us understand the best month, day, and hour of the day to travel. Also, it can help us to predict what are the accident prone areas in each state. According to a research, it shows that the highest death is happening between the 20-35 age group, which is impacting the US economy. Most of the accidents are also occurring due to drunk driving. Finally, this study recommends infrastructure, Policy, Administrative, and Human Behavior changes, which can help to reduce US accidents.
